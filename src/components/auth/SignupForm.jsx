@@ -18,7 +18,7 @@ export default function SignupForm({ onClose, onSwitchToLogin, onSuccess }) {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const { register } = useAuth(); // 👈 useAuth থেকে register নিন
+    // const { register } = useAuth(); // 👈 useAuth থেকে register নিন
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -92,9 +92,11 @@ export default function SignupForm({ onClose, onSwitchToLogin, onSuccess }) {
         }
     };
 
-    const handleOAuthLogin = async (provider) => {
-        toast.loading(`Redirecting to ${provider}...`);
-        window.location.href = `http://localhost:5000/api/auth/${provider}`;
+
+    const handleOAuthLogin = (provider) => {
+        const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+        console.log("Redirecting to:", `${BASE_URL}/api/auth/${provider}`);
+        window.location.href = `${BASE_URL}/api/auth/${provider}`;
     };
 
     // ✅ সেফ নেভিগেশন ফাংশন

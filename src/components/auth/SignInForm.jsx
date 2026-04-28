@@ -4,6 +4,7 @@ import InputField from "../common/InputField";
 import Button from "../common/Button";
 import authAPI from "../../services/authAPI";  // 👈 API এর জায়গায় authAPI
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function SignInForm({ onClose, onSwitchToSignup, onSwitchToForgot, onSuccess }) {
     const [formData, setFormData] = useState({
@@ -15,6 +16,8 @@ export default function SignInForm({ onClose, onSwitchToSignup, onSwitchToForgot
     const [showPassword, setShowPassword] = useState(false);
 
     const { login } = useAuth(); // 👈 useAuth থেকে login নিন
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -56,33 +59,32 @@ export default function SignInForm({ onClose, onSwitchToSignup, onSwitchToForgot
 
         try {
             // ✅ useAuth এর login ফাংশন ব্যবহার করুন
-            const success = await login({
+            await login({
                 email: formData.email,
                 password: formData.password
             });
-
-            if (success) {
-                // Modal বন্ধ করুন
-                if (onClose) onClose();
-            }
+            toast.success("Login successful!");
+            if (onClose) onClose();
+            navigate("/");
 
         } catch (err) {
+            console.log(err);
             if (err.response?.data?.needsVerification) {
                 toast.error("Please verify your email first! Check your inbox.");
                 // Optionally show resend button
             } else {
                 toast.error(err.response?.data?.message || "Invalid email or password!");
             }
-            toast.error(err.response?.data?.message || "Invalid email or password!");
         }
         finally {
             setSubmitting(false);
         }
     };
 
+
     const handleOAuthLogin = (provider) => {
-        toast.loading(`Redirecting to ${provider}...`);
-        window.location.href = `http://localhost:5000/api/auth/${provider}`;
+        const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+        window.location.href = `${BASE_URL}/api/auth/${provider}`;
     };
 
     return (

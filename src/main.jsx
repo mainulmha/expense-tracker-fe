@@ -16,6 +16,9 @@ import ReportPage from './pages/ReportPage.jsx'
 import VerifyEmail from './pages/VerifyEmail.jsx'
 import SettingsPage from './pages/SettingsPage.jsx'
 import AnalyticsPage from './pages/AnalyticsPage.jsx'
+import OAuthSuccess from './pages/OAuthSuccess.jsx'
+import LoginRedirect from './pages/LoginRedirect.jsx'
+import SignupRedirect from './pages/SignupRedirect.jsx'
 
 
 
@@ -27,7 +30,10 @@ createRoot(document.getElementById('root')).render(
           <Routes>
             {/* Public Route - সবাই দেখতে পারবে */}
             <Route path="/" element={<App />} />
+            <Route path="/login" element={<LoginRedirect />} />
+            <Route path="/signup" element={<SignupRedirect />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/oauth-success" element={<OAuthSuccess />} />
 
             {/* Protected Routes - শুধু লগইন ইউজার দেখতে পারবে */}
             <Route path="/analytics" element={

@@ -1,3 +1,142 @@
+## 1. Folder Structure
+
+### Recommended Structure Basic to Intermediate Level
+
+```
+src/
+│
+├── assets/
+│   └── images/
+│
+├── components/
+│   ├── Navbar.jsx
+│   ├── Balance.jsx
+│   ├── ExpenseItem.jsx
+│   ├── ExpenseList.jsx
+│   ├── AddExpense.jsx
+│
+├── pages/
+│   └── Dashboard.jsx
+│
+├── services/
+│   └── api.js
+│
+├── hooks/
+│   └── useExpenses.js
+│
+├── context/
+│   └── ExpenseContext.jsx
+│
+├── utils/
+│   ├── formatCurrency.js
+│   └── calculateBalance.js
+│
+├── styles/
+│   └── global.css
+│
+├── App.jsx
+├── main.jsx
+```
+
+### Advanced Folder Structure (Professional Level)
+
+```
+src/
+│
+├── app/
+│   └── store.js
+│
+├── features/
+│   ├── auth/
+│   │   ├── components/
+│   │   ├── authAPI.js
+│   │   ├── authSlice.js
+│   │
+│   ├── expenses/
+│   │   ├── components/
+│   │   ├── ExpenseList.jsx
+│   │   ├── AddExpense.jsx
+│   │   ├── expenseAPI.js
+│   │   ├── expenseSlice.js
+│   │
+│   ├── dashboard/
+│   │   ├── components/
+│   │   ├── Dashboard.jsx
+│
+├── components/
+│   ├── UI/
+│   │   ├── Button.jsx
+│   │   ├── Modal.jsx
+│
+├── hooks/
+├── utils/
+├── routes/
+│   └── AppRoutes.jsx
+│
+├── App.jsx
+├── main.jsx
+```
+
+## **2.Tailwind CSS** install করতে চাও, তাহলে নিচেরটা follow করলেই clean ভাবে হয়ে যাবে 👇
+
+---
+
+### 🔹 Method 1 (Recommended – Vite / React Sandbox)
+
+### 1️⃣ Dependencies install করো
+
+Terminal (Sandbox-এর ভিতরে) এ লিখো:
+
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+```
+
+---
+
+### 2️⃣ `tailwind.config.js` edit করো
+
+```js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+---
+
+### 3️⃣ CSS file এ Tailwind add করো
+
+👉 `src/index.css` (বা `main.css`) এ লিখো:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+---
+
+### 4️⃣ CSS import করো
+
+👉 `main.jsx` বা `index.js` এ:
+
+```js
+import "./index.css";
+```
+
+---
+
+### 5️⃣ Test করো
+
+```jsx
+<h1 className="text-3xl font-bold text-blue-500">Hello Tailwind 🚀</h1>
+```
+
 ## ⚙️ Settings Page - কী কী করা যায়?
 
 Settings Page এ সাধারণত এই ফিচারগুলো থাকে:
