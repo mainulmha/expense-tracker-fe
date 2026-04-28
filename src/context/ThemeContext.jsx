@@ -1,12 +1,8 @@
-// context/ThemeContext.jsx
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const ThemeContext = createContext();
 
 export const useTheme = () => {
-    console.log("######################")
-    console.log("Use theme call")
-    console.log("######################")
     const context = useContext(ThemeContext);
     if (!context) {
         throw new Error('useTheme must be used within ThemeProvider');
@@ -22,14 +18,8 @@ export const ThemeProvider = ({ children }) => {
 
     useEffect(() => {
         if (theme === 'dark') {
-            console.log("######################")
-            console.log(theme)
-            console.log("######################")
             document.documentElement.classList.add('dark');
         } else {
-            console.log("######################")
-            console.log(theme)
-            console.log("######################")
             document.documentElement.classList.remove('dark');
         }
         localStorage.setItem('theme', theme);
