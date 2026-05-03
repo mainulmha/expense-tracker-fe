@@ -32,15 +32,14 @@ export default function CustomSelect({ value, onChange, type, error, categories 
 
     return (
         <div className="relative" ref={dropdownRef}>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className="block app-kicker mb-2">
                 Category
             </label>
 
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className={`w-full bg-[#1f2937] text-white rounded-lg px-4 py-3 border ${error ? 'border-red-500' : 'border-gray-700'
-                    } focus:border-green-500 focus:outline-none flex items-center justify-between hover:bg-[#2a3441] transition-colors`}
+                className={`app-field flex items-center justify-between ${error ? 'border-red-500' : 'border-gray-700'} hover:bg-[#263244]`}
             >
                 <div className="flex items-center gap-3">
                     {selectedIcon && selectedIcon.img ? (
@@ -72,7 +71,7 @@ export default function CustomSelect({ value, onChange, type, error, categories 
             </button>
 
             {isOpen && (
-                <div className="absolute z-50 w-full mt-2 bg-[#1f2937] border border-gray-700 rounded-lg shadow-xl max-h-64 overflow-y-auto">
+                <div className="absolute z-50 w-full mt-2 bg-[#111827] border border-gray-700 rounded-lg shadow-xl max-h-64 overflow-y-auto">
                     <div className="py-1">
                         {currentCategories.map(cat => {
                             const { img, bgColor, color, label } = getCategoryIcon(cat);
@@ -81,7 +80,7 @@ export default function CustomSelect({ value, onChange, type, error, categories 
                                     key={cat}
                                     type="button"
                                     onClick={() => handleSelect(cat)}
-                                    className={`w-full px-4 py-2.5 text-left hover:bg-gray-700 transition-colors flex items-center gap-3 ${selected === cat ? 'bg-gray-700/50' : ''
+                                    className={`w-full px-4 py-2.5 text-left hover:bg-gray-800 transition-colors flex items-center gap-3 ${selected === cat ? 'bg-blue-600/10 text-blue-300' : ''
                                         }`}
                                 >
                                     <div
@@ -96,7 +95,7 @@ export default function CustomSelect({ value, onChange, type, error, categories 
                                     </div>
                                     <span className="text-white text-sm">{label}</span>
                                     {selected === cat && (
-                                        <svg className="w-4 h-4 text-green-500 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-4 h-4 text-blue-400 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                         </svg>
                                     )}

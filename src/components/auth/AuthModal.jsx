@@ -13,14 +13,14 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = "l
             // লগআউট অবস্থায় ফরগট পাসওয়ার্ড ডাটা ক্লিয়ার করুন
             localStorage.removeItem("forgotPasswordStep");
             localStorage.removeItem("forgotPasswordData");
-            setMode("login");
+            setMode(initialMode);
         } else {
             const savedMode = localStorage.getItem("authModalMode");
             if (savedMode && (savedMode === "login" || savedMode === "signup")) {
                 setMode(savedMode);
             }
         }
-    }, []);
+    }, [initialMode]);
 
     useEffect(() => {
         if (isOpen) {
@@ -56,7 +56,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = "l
         >
             <div
                 onClick={(e) => e.stopPropagation()}
-                className="bg-[#1f2937] w-full max-w-md mx-auto p-4 sm:p-5 md:p-6 rounded-2xl max-h-[90vh] overflow-y-auto relative custom-scroll"
+                className="app-card w-full max-w-md mx-auto p-4 sm:p-5 md:p-6 max-h-[90vh] overflow-y-auto relative custom-scroll"
             >
                 <button
                     onClick={handleClose}

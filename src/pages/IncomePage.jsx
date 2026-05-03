@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import expenseAPI from "../services/expenseAPI";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 export default function IncomePage() {
     const [incomes, setIncomes] = useState([]);
@@ -26,25 +27,26 @@ export default function IncomePage() {
     };
 
     return (
-        <div className="bg-[#020617] min-h-screen text-gray-200">
-            <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6">
+        <div className="app-shell">
+            <Navbar />
+            <div className="app-container">
 
-                <div className="flex items-center gap-4 mb-6">
-                    <button onClick={() => navigate(-1)} className="text-gray-400 hover:text-white">← Back</button>
+                <div className="app-title-row">
+                    <button onClick={() => navigate(-1)} className="app-back-button">←</button>
                     <div>
-                        <h1 className="text-2xl sm:text-3xl font-bold">Income</h1>
+                        <h1 className="app-title">Income</h1>
                         <p className="text-gray-400 text-sm">Total Income: ৳{total.toLocaleString()}</p>
                     </div>
                 </div>
 
                 {loading ? (
-                    <div className="text-center py-12">Loading...</div>
+                    <div className="app-card p-8 text-center text-gray-500">Loading...</div>
                 ) : incomes.length === 0 ? (
-                    <div className="text-center py-12 text-gray-500">No income transactions found</div>
+                    <div className="app-empty-state">No income transactions found</div>
                 ) : (
                     <div className="space-y-3">
                         {incomes.map((item) => (
-                            <div key={item._id} className="bg-[#111827] rounded-xl p-4 flex justify-between items-center">
+                            <div key={item._id} className="app-card p-4 flex justify-between items-center">
                                 <div>
                                     <p className="font-medium">{item.description}</p>
                                     <p className="text-sm text-gray-500">{item.category} • {new Date(item.date).toLocaleDateString()}</p>

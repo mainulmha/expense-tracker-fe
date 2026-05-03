@@ -1,4 +1,4 @@
-import { AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, Legend, ResponsiveContainer } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
 import { useEffect, useState } from "react";
 
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -14,86 +14,96 @@ export default function AreaChartComponent({ data }) {
 
     // Format data
     const formattedData = data.map((item) => ({
-        monthName: `${monthNames[item._id.month - 1]} ${item._id.year.toString().slice(2)}`,
+        monthName: `${monthNames[item._id.month - 1]}`,
         income: item.income || 0,
         expense: item.expense || 0,
         investment: item.investment || 0,
     }));
 
     if (!data || data.length === 0) {
-        return <div className="h-[300px] flex items-center justify-center text-gray-500">No monthly data available</div>;
+        return <div className="h-full flex items-center justify-center text-[10px] uppercase font-black text-gray-600 tracking-widest">No Data</div>;
     }
 
     return (
-        <div className="w-full">
-            <ResponsiveContainer width="100%" height={isMobile ? 340 : 420}>
-                <AreaChart data={formattedData} margin={{ top: 15, right: 20, left: 10, bottom: isMobile ? 50 : 60 }}>
+        <div className="w-full h-full min-h-[240px]">
+            <ResponsiveContainer width="100%" height="100%">
+                <AreaChart
+                    data={formattedData}
+                    margin={{ top: 10, right: 10, left: -20, bottom: 0 }} // Left margin negative to align with axis
+                >
                     <defs>
                         <linearGradient id="colorIncome" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#22c55e" stopOpacity={0.85} />
-                            <stop offset="95%" stopColor="#22c55e" stopOpacity={0.1} />
+                            <stop offset="5%" stopColor="#22c55e" stopOpacity={0.3} />
+                            <stop offset="95%" stopColor="#22c55e" stopOpacity={0} />
                         </linearGradient>
                         <linearGradient id="colorExpense" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8} />
-                            <stop offset="95%" stopColor="#ef4444" stopOpacity={0.08} />
+                            <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3} />
+                            <stop offset="95%" stopColor="#ef4444" stopOpacity={0} />
                         </linearGradient>
                         <linearGradient id="colorInvestment" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#a855f7" stopOpacity={0.7} />
-                            <stop offset="95%" stopColor="#a855f7" stopOpacity={0.05} />
+                            <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
+                            <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                         </linearGradient>
                     </defs>
 
-                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
 
                     <XAxis
                         dataKey="monthName"
-                        tick={{ fill: '#9ca3af', fontSize: isMobile ? 10 : 12 }}
-                        angle={isMobile ? -45 : -35}
-                        textAnchor="end"
-                        height={isMobile ? 55 : 70}
-                        interval={0}
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{ fill: '#64748b', fontSize: 10, fontWeight: 'bold' }}
+                        dy={10}
                     />
 
                     <YAxis
-                        tick={{ fill: '#9ca3af', fontSize: isMobile ? 10 : 12 }}
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{ fill: '#64748b', fontSize: 10 }}
                         tickFormatter={(v) => v >= 1000 ? `${(v / 1000).toFixed(0)}k` : v}
                     />
 
                     <Tooltip
                         contentStyle={{
-                            backgroundColor: "#1f2937",
-                            border: "none",
-                            borderRadius: "10px",
-                            color: "#fff",
-                            fontSize: isMobile ? 12 : 14
+                            backgroundColor: "#0f172a",
+                            border: "1px solid #1e293b",
+                            borderRadius: "12px",
+                            fontSize: "11px",
+                            fontWeight: "bold",
+                            boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.5)"
                         }}
+                        itemStyle={{ padding: "2px 0" }}
                     />
 
-                    {/* <Legend verticalAlign="top" height={40} contentStyle={{ fontSize: 14 }} /> */}
-
                     <Area
-                        type="natural"
+                        type="monotone"
                         dataKey="income"
                         name="Income"
                         stroke="#22c55e"
                         fill="url(#colorIncome)"
-                        strokeWidth={3}
+                        strokeWidth={2}
+                        dot={false}
+                        activeDot={{ r: 4, strokeWidth: 0 }}
                     />
                     <Area
-                        type="natural"
+                        type="monotone"
                         dataKey="expense"
                         name="Expense"
                         stroke="#ef4444"
                         fill="url(#colorExpense)"
-                        strokeWidth={3}
+                        strokeWidth={2}
+                        dot={false}
+                        activeDot={{ r: 4, strokeWidth: 0 }}
                     />
                     <Area
-                        type="natural"
+                        type="monotone"
                         dataKey="investment"
                         name="Investment"
-                        stroke="#a855f7"
+                        stroke="#3b82f6"
                         fill="url(#colorInvestment)"
-                        strokeWidth={2.5}
+                        strokeWidth={2}
+                        dot={false}
+                        activeDot={{ r: 4, strokeWidth: 0 }}
                     />
                 </AreaChart>
             </ResponsiveContainer>

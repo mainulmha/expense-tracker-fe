@@ -44,7 +44,7 @@ export default function ForgotPasswordForm({ onClose, onBackToLogin }) {
         if (step === 2 && formData.email) {
             // টাইমার চালানোর দরকার হলে এখানে করুন
         }
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -156,7 +156,7 @@ export default function ForgotPasswordForm({ onClose, onBackToLogin }) {
                     return prev - 1;
                 });
             }, 1000);
-        } catch (err) {
+        } catch {
             toast.error("Failed to resend OTP!");
             setResendDisabled(false);
             setCountdown(0);
@@ -216,7 +216,7 @@ export default function ForgotPasswordForm({ onClose, onBackToLogin }) {
     const renderStep1 = () => (
         <form onSubmit={handleSendOTP} className="space-y-5">
             <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <div className="w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-900/20">
                     <span className="text-3xl">🔐</span>
                 </div>
                 <h2 className="text-xl font-semibold text-white mb-1">Forgot Password?</h2>
@@ -245,7 +245,7 @@ export default function ForgotPasswordForm({ onClose, onBackToLogin }) {
                 <button
                     type="button"
                     onClick={onBackToLogin}
-                    className="text-sm text-gray-400 hover:text-green-400 transition flex items-center justify-center gap-1"
+                    className="text-sm text-gray-400 hover:text-blue-400 transition flex items-center justify-center gap-1"
                 >
                     <ArrowLeft size={14} />
                     Back to Login
@@ -257,13 +257,13 @@ export default function ForgotPasswordForm({ onClose, onBackToLogin }) {
     const renderStep2 = () => (
         <form onSubmit={handleVerifyOTP} className="space-y-5">
             <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <div className="w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-900/20">
                     <span className="text-3xl">📧</span>
                 </div>
                 <h2 className="text-xl font-semibold text-white mb-1">Verify Code</h2>
                 <p className="text-gray-400 text-sm">
                     We've sent a 6-digit code to <br />
-                    <span className="text-green-400 font-medium">{formData.email}</span>
+                    <span className="text-blue-400 font-medium">{formData.email}</span>
                 </p>
             </div>
 
@@ -284,7 +284,7 @@ export default function ForgotPasswordForm({ onClose, onBackToLogin }) {
                     type="button"
                     onClick={handleResendOTP}
                     disabled={resendDisabled}
-                    className="text-sm text-green-400 hover:text-green-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="text-sm text-blue-400 hover:text-blue-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     {resendDisabled ? `Resend code in ${countdown}s` : "Resend Code"}
                 </button>
@@ -298,7 +298,7 @@ export default function ForgotPasswordForm({ onClose, onBackToLogin }) {
                 <button
                     type="button"
                     onClick={() => setStep(1)}
-                    className="text-sm text-gray-400 hover:text-green-400 transition flex items-center justify-center gap-1"
+                    className="text-sm text-gray-400 hover:text-blue-400 transition flex items-center justify-center gap-1"
                 >
                     <ArrowLeft size={14} />
                     Back to Email
@@ -310,7 +310,7 @@ export default function ForgotPasswordForm({ onClose, onBackToLogin }) {
     const renderStep3 = () => (
         <form onSubmit={handleResetPassword} className="space-y-5">
             <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <div className="w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-900/20">
                     <span className="text-3xl">🔒</span>
                 </div>
                 <h2 className="text-xl font-semibold text-white mb-1">Reset Password</h2>
@@ -367,7 +367,7 @@ export default function ForgotPasswordForm({ onClose, onBackToLogin }) {
                 <button
                     type="button"
                     onClick={onBackToLogin}
-                    className="text-sm text-gray-400 hover:text-green-400 transition flex items-center justify-center gap-1"
+                    className="text-sm text-gray-400 hover:text-blue-400 transition flex items-center justify-center gap-1"
                 >
                     <ArrowLeft size={14} />
                     Back to Login

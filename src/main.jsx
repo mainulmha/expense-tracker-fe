@@ -12,7 +12,6 @@ import { ThemeProvider } from './context/ThemeContext.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 import ProfilePage from './pages/ProfilePage.jsx';
-import ReportPage from './pages/ReportPage.jsx'
 import VerifyEmail from './pages/VerifyEmail.jsx'
 import SettingsPage from './pages/SettingsPage.jsx'
 import AnalyticsPage from './pages/AnalyticsPage.jsx'
@@ -35,16 +34,9 @@ createRoot(document.getElementById('root')).render(
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/oauth-success" element={<OAuthSuccess />} />
 
-            {/* Protected Routes - শুধু লগইন ইউজার দেখতে পারবে */}
             <Route path="/analytics" element={
               <ProtectedRoute>
                 <AnalyticsPage />
-              </ProtectedRoute>
-            } />
-
-            <Route path="/reports" element={
-              <ProtectedRoute>
-                <ReportPage />
               </ProtectedRoute>
             } />
 

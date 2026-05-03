@@ -12,21 +12,17 @@ export default function InputField({
     className = "",
     disabled = false,
     required = false,
+    leftIcon,
+    rightIcon,
     ...props
 }) {
-    const baseInputClass = `
-        w-full bg-[#374151] text-white rounded-lg px-4 py-3 
-        focus:outline-none focus:ring-2 focus:ring-green-500 
-        border border-transparent focus:border-green-500
-        transition-all duration-200
-        disabled:opacity-50 disabled:cursor-not-allowed text-sm sm: text-lg
-    `;
+    const baseInputClass = `app-field ${leftIcon ? "pl-10" : ""} ${rightIcon ? "pr-10" : ""}`;
 
     return (
         <div className={`space-y-1.5 ${className}`}>
             {/* Label */}
             {label && (
-                <label className="block text-sm font-medium text-gray-300">
+                <label className="block app-kicker">
                     {label}
                     {required && <span className="text-red-400 ml-1">*</span>}
                 </label>
@@ -45,16 +41,28 @@ export default function InputField({
                     {options}
                 </select>
             ) : (
-                <input
-                    type={type}
-                    name={name}
-                    value={value}
-                    onChange={onChange}
-                    placeholder={placeholder}
-                    disabled={disabled}
-                    className={baseInputClass}
-                    {...props}
-                />
+                <div className="relative">
+                    {leftIcon && (
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                            {leftIcon}
+                        </span>
+                    )}
+                    <input
+                        type={type}
+                        name={name}
+                        value={value}
+                        onChange={onChange}
+                        placeholder={placeholder}
+                        disabled={disabled}
+                        className={baseInputClass}
+                        {...props}
+                    />
+                    {rightIcon && (
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2">
+                            {rightIcon}
+                        </span>
+                    )}
+                </div>
             )}
 
             {/* Error Message */}

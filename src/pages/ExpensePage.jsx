@@ -3,6 +3,7 @@ import expenseAPI from "../services/expenseAPI";
 import { useNavigate } from "react-router-dom";
 import { getCategoryIcon } from "../constants/categoryIcons";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import Navbar from "../components/Navbar";
 
 
 export default function ExpensePage() {
@@ -15,10 +16,11 @@ export default function ExpensePage() {
     const [filterType, setFilterType] = useState("expense"); // ডিফল্ট expense
     const navigate = useNavigate();
 
+    // Fetches whenever the visible page or transaction type changes.
     useEffect(() => {
         fetchExpenses();
         fetchChartData();
-    }, [currentPage, filterType]);
+    }, [currentPage, filterType]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // এক্সপেন্স লিস্ট ফেচ করা
     const fetchExpenses = async () => {
@@ -81,19 +83,20 @@ export default function ExpensePage() {
     ];
 
     return (
-        <div className="bg-[#020617] min-h-screen text-gray-200">
-            <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6">
+        <div className="app-shell">
+            <Navbar />
+            <div className="app-container">
 
                 {/* Header with Back Button */}
-                <div className="flex items-center gap-4 mb-6">
+                <div className="app-title-row">
                     <button
                         onClick={() => navigate(-1)}
-                        className="text-gray-400 hover:text-white transition-colors text-xl"
+                        className="app-back-button"
                     >
                         ←
                     </button>
                     <div>
-                        <h1 className="text-2xl sm:text-3xl font-bold">Expense</h1>
+                        <h1 className="app-title">Expense</h1>
                         <p className="text-gray-400 text-sm">Total Expense: ৳{total.toLocaleString()}</p>
                     </div>
                 </div>
@@ -116,14 +119,14 @@ export default function ExpensePage() {
                 </div>
 
                 {/* 📊 বারচার্ট - উপরে */}
-                <div className="bg-[#111827] rounded-xl p-4 sm:p-6 mb-6">
+                <div className="app-card p-4 sm:p-6 mb-6">
                     <h3 className="text-gray-400 text-sm sm:text-base mb-4">Monthly Expense Trend</h3>
                     {chartData.length > 0 ? (
                         <div className="w-full h-[300px] sm:h-[350px]">
                             <BarChartComponent data={chartData} />
                         </div>
                     ) : (
-                        <div className="text-center py-12 text-gray-500">Loading chart...</div>
+                        <div className="app-empty-state">Loading chart...</div>
                     )}
                 </div>
 
@@ -147,7 +150,7 @@ export default function ExpensePage() {
                             </div>
                         </div>
                     ) : expenses.length === 0 ? (
-                        <div className="text-center py-12 text-gray-500 bg-[#111827] rounded-xl">
+                        <div className="app-empty-state">
                             No expense transactions found
                         </div>
                     ) : (
@@ -204,7 +207,7 @@ function DayGroup({ group }) {
     });
 
     return (
-        <div className="bg-[#111827] rounded-xl overflow-hidden">
+        <div className="app-card overflow-hidden">
             {/* ডে হেডার */}
             <div
                 onClick={() => setIsOpen(!isOpen)}

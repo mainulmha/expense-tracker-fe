@@ -8,18 +8,18 @@ export default function Button({
     className = "",
     ...props
 }) {
-    const baseStyles = "font-medium rounded-lg transition-all duration-200 flex items-center justify-center text-sm";
+    const baseStyles = "font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-2 text-sm active:scale-[0.98]";
 
     const variants = {
-        primary: "bg-green-500 hover:bg-green-600 text-white disabled:bg-green-600/70",
-        secondary: "bg-gray-600 hover:bg-gray-700 text-white",
-        danger: "bg-red-500 hover:bg-red-600 text-white"
+        primary: "app-primary-button",
+        secondary: "app-secondary-button",
+        danger: "app-danger-button"
     };
 
     const sizes = {
         sm: "px-4 py-2 text-sm",
-        md: "px-6 py-3 text-base",
-        lg: "px-8 py-4 text-lg"
+        md: "px-5 py-2.5 text-sm",
+        lg: "px-6 py-3 text-base"
     };
 
     return (

@@ -2,6 +2,80 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .app-shell {
+        @apply bg-[#020617] min-h-screen text-gray-200 font-sans selection:bg-blue-500/30;
+    }
+
+    .app-container {
+        @apply max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6;
+    }
+
+    .app-container-narrow {
+        @apply max-w-4xl mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6;
+    }
+
+    .app-card {
+        @apply bg-[#111827] rounded-xl border border-gray-800 shadow-sm;
+    }
+
+    .app-card-muted {
+        @apply bg-[#0f172a]/50 rounded-xl border border-gray-800;
+    }
+
+    .app-card-header {
+        @apply px-5 sm:px-6 py-4 border-b border-gray-800 flex items-center justify-between gap-4;
+    }
+
+    .app-title-row {
+        @apply flex items-center gap-4 mb-6;
+    }
+
+    .app-back-button {
+        @apply w-10 h-10 rounded-lg bg-[#111827] border border-gray-800 text-gray-400 hover:text-white hover:border-gray-700 transition flex items-center justify-center;
+    }
+
+    .app-title {
+        @apply text-2xl sm:text-3xl font-bold text-white tracking-tight;
+    }
+
+    .app-kicker {
+        @apply text-[10px] uppercase tracking-wider text-gray-500 font-bold;
+    }
+
+    .app-section-title {
+        @apply text-gray-400 text-sm font-medium flex items-center gap-2;
+    }
+
+    .app-field {
+        @apply w-full bg-[#1f2937] border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed;
+    }
+
+    .app-select {
+        @apply app-field cursor-pointer;
+    }
+
+    .app-icon-button {
+        @apply w-10 h-10 rounded-lg bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 transition flex items-center justify-center;
+    }
+
+    .app-primary-button {
+        @apply bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed;
+    }
+
+    .app-secondary-button {
+        @apply bg-gray-800 hover:bg-gray-700 text-gray-200 rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed;
+    }
+
+    .app-danger-button {
+        @apply bg-red-600 hover:bg-red-500 text-white rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed;
+    }
+
+    .app-empty-state {
+        @apply text-center py-16 text-gray-500 bg-[#0f172a]/40 border border-dashed border-gray-800 rounded-xl;
+    }
+}
+
 
 /* Light Mode Variables */
 :root {

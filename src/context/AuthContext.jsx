@@ -11,9 +11,10 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+    // Initial localStorage auth hydration runs once on app boot.
     useEffect(() => {
         checkAuth();
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const checkAuth = async () => {
         const token = localStorage.getItem('token');

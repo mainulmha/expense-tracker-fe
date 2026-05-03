@@ -34,15 +34,14 @@ export default function CategorySelect({ value, onChange, type, error }) {
 
     return (
         <div className="relative" ref={dropdownRef}>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className="block app-kicker mb-2">
                 Category
             </label>
 
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className={`w-full bg-[#1f2937] text-white rounded-lg px-4 py-3 border ${error ? 'border-red-500' : 'border-gray-700'
-                    } focus:border-green-500 focus:outline-none flex items-center justify-between`}
+                className={`app-field flex items-center justify-between ${error ? 'border-red-500' : 'border-gray-700'}`}
             >
                 <div className="flex items-center gap-3">
                     {selectedIcon ? (
@@ -67,7 +66,7 @@ export default function CategorySelect({ value, onChange, type, error }) {
             </button>
 
             {isOpen && (
-                <div className="absolute z-10 w-full mt-1 bg-[#1f2937] border border-gray-700 rounded-lg shadow-xl max-h-60 overflow-y-auto">
+                <div className="absolute z-10 w-full mt-1 bg-[#111827] border border-gray-700 rounded-lg shadow-xl max-h-60 overflow-y-auto">
                     {currentCategories.map(cat => {
                         const { img, bgColor, label } = getCategoryIcon(cat);
                         return (

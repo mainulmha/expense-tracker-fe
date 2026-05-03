@@ -18,6 +18,7 @@ export default function VerifyEmail() {
 
     const hasVerified = useRef(false);
 
+    // Verify a token only once for this page load.
     useEffect(() => {
         if (!token) {
             setStatus("no-token");
@@ -28,7 +29,7 @@ export default function VerifyEmail() {
         hasVerified.current = true;
 
         verifyEmail();
-    }, [token]);
+    }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const verifyEmail = async () => {
         try {
@@ -107,15 +108,15 @@ export default function VerifyEmail() {
     };
 
     return (
-        <div className="bg-[#020617] min-h-screen flex items-center justify-center px-4">
+        <div className="app-shell flex items-center justify-center px-4">
             <Toaster position="top-right" />
 
-            <div className="bg-[#111827] rounded-3xl p-8 text-center max-w-md w-full border border-gray-700">
+            <div className="app-card p-8 text-center max-w-md w-full">
 
                 {/* Verifying State */}
                 {status === "verifying" && (
                     <>
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto mb-4"></div>
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
                         <h2 className="text-xl font-semibold text-white mb-2">Verifying your email...</h2>
                         <p className="text-gray-400">Please wait a moment</p>
                     </>
@@ -124,12 +125,12 @@ export default function VerifyEmail() {
                 {/* Success State */}
                 {status === "success" && (
                     <>
-                        <div className="w-20 h-20 mx-auto mb-6 bg-green-500/20 rounded-full flex items-center justify-center">
+                        <div className="w-20 h-20 mx-auto mb-6 bg-blue-500/20 rounded-xl flex items-center justify-center">
                             <span className="text-5xl">✅</span>
                         </div>
                         <h2 className="text-2xl font-semibold text-white mb-2">Email Verified!</h2>
                         <p className="text-gray-400 mb-6">Your email has been successfully verified.</p>
-                        <p className="text-green-400 text-sm">Redirecting to dashboard...</p>
+                        <p className="text-blue-400 text-sm">Redirecting to dashboard...</p>
                     </>
                 )}
 
@@ -144,14 +145,14 @@ export default function VerifyEmail() {
                         {resendSuccess ? (
                             // ✅ ইমেল রিসেন্ড成功后 দেখাবে
                             <>
-                                <div className="w-20 h-20 mx-auto mb-6 bg-green-500/20 rounded-full flex items-center justify-center">
+                                <div className="w-20 h-20 mx-auto mb-6 bg-blue-500/20 rounded-xl flex items-center justify-center">
                                     <span className="text-5xl">📧</span>
                                 </div>
                                 <h2 className="text-2xl font-semibold text-white mb-2">Email Sent!</h2>
                                 <p className="text-gray-400 mb-4">
                                     A new verification link has been sent to your email.
                                 </p>
-                                <p className="text-green-400 text-sm mb-6">
+                                <p className="text-blue-400 text-sm mb-6">
                                     Please check your inbox and click the verification link.
                                 </p>
                                 <button
@@ -176,7 +177,7 @@ export default function VerifyEmail() {
                                             value={inputEmail}
                                             onChange={(e) => setInputEmail(e.target.value)}
                                             placeholder="Enter your email address"
-                                            className="w-full bg-[#1f2937] rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+                                            className="app-field"
                                         />
                                     </div>
                                 )}
@@ -184,7 +185,7 @@ export default function VerifyEmail() {
                                 <button
                                     onClick={handleResendEmail}
                                     disabled={resending}
-                                    className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl w-full transition disabled:opacity-50"
+                                    className="app-primary-button px-6 py-3 w-full"
                                 >
                                     {resending ? "Sending..." : "Resend Verification Email"}
                                 </button>
@@ -203,7 +204,7 @@ export default function VerifyEmail() {
                         <p className="text-gray-400 mb-6">{errorMessage || "This verification link is invalid or already used."}</p>
                         <button
                             onClick={() => navigate("/")}
-                            className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl w-full transition"
+                            className="app-primary-button px-6 py-3 w-full"
                         >
                             Go to Home
                         </button>
@@ -220,7 +221,7 @@ export default function VerifyEmail() {
                         <p className="text-gray-400 mb-6">{errorMessage || "Please try again later."}</p>
                         <button
                             onClick={() => navigate("/")}
-                            className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl w-full transition"
+                            className="app-primary-button px-6 py-3 w-full"
                         >
                             Go to Home
                         </button>
@@ -237,7 +238,7 @@ export default function VerifyEmail() {
                         <p className="text-gray-400 mb-6">Please check your email and click the correct verification link.</p>
                         <button
                             onClick={() => navigate("/")}
-                            className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl w-full transition"
+                            className="app-primary-button px-6 py-3 w-full"
                         >
                             Go to Home
                         </button>

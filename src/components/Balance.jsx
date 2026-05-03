@@ -5,7 +5,7 @@ export default function Balance({ data, loading }) {
         return (
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
                 {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="bg-[#111827] p-3 sm:p-5 rounded-xl sm:rounded-2xl animate-pulse h-24 sm:h-28"></div>
+                    <div key={i} className="app-card p-4 sm:p-5 animate-pulse h-24 sm:h-28"></div>
                 ))}
             </div>
         );

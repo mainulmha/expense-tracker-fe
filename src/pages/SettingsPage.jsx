@@ -3,9 +3,8 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import {
-    User, Bell, Moon, Sun, DollarSign,
-    FolderTree, Wallet, Download, Upload,
-    Globe, Save, RotateCcw, Check
+    Bell, Moon, Sun, DollarSign,
+    Download, Upload, Globe, Save, RotateCcw
 } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { useTheme } from '../context/ThemeContext';
@@ -134,7 +133,7 @@ export default function SettingsPage() {
                     setNotifications(data.settings.notifications || notifications);
                     toast.success("Settings imported successfully! 📤");
                 }
-            } catch (error) {
+            } catch {
                 toast.error("Invalid backup file");
             }
         };
@@ -142,28 +141,28 @@ export default function SettingsPage() {
     };
 
     return (
-        <div className="bg-[#020617] min-h-screen text-gray-200">
+        <div className="app-shell">
             <Navbar />
             <Toaster position="top-right" />
 
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+            <div className="app-container-narrow">
 
                 {/* Header */}
-                <div className="flex items-center gap-4 mb-6">
+                <div className="app-title-row">
                     <button
                         onClick={() => navigate(-1)}
-                        className="text-gray-400 hover:text-white text-xl sm:text-2xl"
+                        className="app-back-button"
                     >
                         ←
                     </button>
-                    <h1 className="text-2xl sm:text-3xl font-bold">Settings</h1>
+                    <h1 className="app-title">Settings</h1>
                 </div>
 
                 <div className="space-y-5 sm:space-y-6">
 
                     {/* Theme Settings */}
-                    <div className="bg-[#111827] rounded-2xl p-5 sm:p-6 border border-gray-800">
-                        <h3 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                    <div className="app-card p-5 sm:p-6">
+                        <h3 className="app-section-title mb-4">
                             <Moon size={20} /> Appearance
                         </h3>
                         <div className="space-y-4">
@@ -171,7 +170,7 @@ export default function SettingsPage() {
                                 <button
                                     onClick={() => theme !== 'dark' && toggleTheme()}
                                     className={`flex-1 py-2.5 rounded-lg transition flex items-center justify-center gap-2 text-sm sm:text-base ${theme === "dark"
-                                        ? "bg-green-500 text-white"
+                                        ? "bg-blue-600 text-white"
                                         : "bg-gray-800 text-gray-400 hover:bg-gray-700"
                                         }`}
                                 >
@@ -180,7 +179,7 @@ export default function SettingsPage() {
                                 <button
                                     onClick={() => theme !== 'light' && toggleTheme()}
                                     className={`flex-1 py-2.5 rounded-lg transition flex items-center justify-center gap-2 text-sm sm:text-base ${theme === "light"
-                                        ? "bg-green-500 text-white"
+                                        ? "bg-blue-600 text-white"
                                         : "bg-gray-800 text-gray-400 hover:bg-gray-700"
                                         }`}
                                 >
@@ -216,8 +215,8 @@ export default function SettingsPage() {
                     </div>
 
                     {/* Notification Settings */}
-                    <div className="bg-[#111827] rounded-2xl p-5 sm:p-6 border border-gray-800">
-                        <h3 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                    <div className="app-card p-5 sm:p-6">
+                        <h3 className="app-section-title mb-4">
                             <Bell size={20} /> Notifications
                         </h3>
                         <div className="space-y-4">
@@ -225,7 +224,7 @@ export default function SettingsPage() {
                                 <span className="text-sm sm:text-base text-gray-300">Email Alerts</span>
                                 <button
                                     onClick={() => setNotifications({ ...notifications, emailAlerts: !notifications.emailAlerts })}
-                                    className={`w-12 h-6 rounded-full transition ${notifications.emailAlerts ? "bg-green-500" : "bg-gray-700"
+                                    className={`w-12 h-6 rounded-full transition ${notifications.emailAlerts ? "bg-blue-600" : "bg-gray-700"
                                         }`}
                                 >
                                     <div className={`w-5 h-5 rounded-full bg-white transition-transform ${notifications.emailAlerts ? "translate-x-6" : "translate-x-1"
@@ -236,7 +235,7 @@ export default function SettingsPage() {
                                 <span className="text-sm sm:text-base text-gray-300">Budget Alerts</span>
                                 <button
                                     onClick={() => setNotifications({ ...notifications, budgetAlerts: !notifications.budgetAlerts })}
-                                    className={`w-12 h-6 rounded-full transition ${notifications.budgetAlerts ? "bg-green-500" : "bg-gray-700"
+                                    className={`w-12 h-6 rounded-full transition ${notifications.budgetAlerts ? "bg-blue-600" : "bg-gray-700"
                                         }`}
                                 >
                                     <div className={`w-5 h-5 rounded-full bg-white transition-transform ${notifications.budgetAlerts ? "translate-x-6" : "translate-x-1"
@@ -247,7 +246,7 @@ export default function SettingsPage() {
                                 <span className="text-sm sm:text-base text-gray-300">Daily Summary Email</span>
                                 <button
                                     onClick={() => setNotifications({ ...notifications, dailySummary: !notifications.dailySummary })}
-                                    className={`w-12 h-6 rounded-full transition ${notifications.dailySummary ? "bg-green-500" : "bg-gray-700"
+                                    className={`w-12 h-6 rounded-full transition ${notifications.dailySummary ? "bg-blue-600" : "bg-gray-700"
                                         }`}
                                 >
                                     <div className={`w-5 h-5 rounded-full bg-white transition-transform ${notifications.dailySummary ? "translate-x-6" : "translate-x-1"
@@ -258,8 +257,8 @@ export default function SettingsPage() {
                     </div>
 
                     {/* Currency & Budget */}
-                    <div className="bg-[#111827] rounded-2xl p-5 sm:p-6 border border-gray-800">
-                        <h3 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                    <div className="app-card p-5 sm:p-6">
+                        <h3 className="app-section-title mb-4">
                             <DollarSign size={20} /> Currency & Budget
                         </h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -268,7 +267,7 @@ export default function SettingsPage() {
                                 <select
                                     value={currency}
                                     onChange={(e) => setCurrency(e.target.value)}
-                                    className="w-full bg-[#1f2937] rounded-lg px-4 py-2.5 text-sm sm:text-base text-white focus:outline-none focus:ring-1 focus:ring-green-500"
+                                    className="app-select"
                                 >
                                     <option value="BDT">🇧🇩 Bangladeshi Taka (৳)</option>
                                     <option value="USD">🇺🇸 US Dollar ($)</option>
@@ -289,7 +288,7 @@ export default function SettingsPage() {
                                         value={monthlyBudget}
                                         onChange={(e) => setMonthlyBudget(e.target.value)}
                                         placeholder="Enter amount"
-                                        className="w-full bg-[#1f2937] rounded-lg pl-8 pr-4 py-2.5 text-sm sm:text-base text-white focus:outline-none focus:ring-1 focus:ring-green-500"
+                                        className="app-field pl-8"
                                     />
                                 </div>
                             </div>
@@ -297,14 +296,14 @@ export default function SettingsPage() {
                     </div>
 
                     {/* Language */}
-                    <div className="bg-[#111827] rounded-2xl p-5 sm:p-6 border border-gray-800">
-                        <h3 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                    <div className="app-card p-5 sm:p-6">
+                        <h3 className="app-section-title mb-4">
                             <Globe size={20} /> Language
                         </h3>
                         <select
                             value={language}
                             onChange={(e) => setLanguage(e.target.value)}
-                            className="w-full bg-[#1f2937] rounded-lg px-4 py-2.5 text-sm sm:text-base text-white focus:outline-none focus:ring-1 focus:ring-green-500"
+                            className="app-select"
                         >
                             <option value="en">English</option>
                             <option value="bn">বাংলা (Coming Soon)</option>
@@ -312,19 +311,19 @@ export default function SettingsPage() {
                     </div>
 
                     {/* Data Management */}
-                    <div className="bg-[#111827] rounded-2xl p-5 sm:p-6 border border-gray-800">
-                        <h3 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                    <div className="app-card p-5 sm:p-6">
+                        <h3 className="app-section-title mb-4">
                             <Download size={20} /> Data Management
                         </h3>
                         <div className="flex gap-4">
                             <button
                                 onClick={exportData}
-                                className="flex-1 bg-green-500 hover:bg-green-600 text-white py-2.5 rounded-lg transition flex items-center justify-center gap-2 text-sm sm:text-base"
+                                className="flex-1 app-primary-button py-2.5 flex items-center justify-center gap-2 text-sm"
                             >
                                 <Download size={16} /> Export
                             </button>
                             <label className="flex-1 cursor-pointer">
-                                <div className="bg-gray-700 hover:bg-gray-600 text-white py-2.5 rounded-lg transition flex items-center justify-center gap-2 text-sm sm:text-base">
+                                <div className="app-secondary-button py-2.5 flex items-center justify-center gap-2 text-sm">
                                     <Upload size={16} /> Import
                                 </div>
                                 <input
@@ -341,13 +340,13 @@ export default function SettingsPage() {
                     <div className="flex gap-4 pt-4">
                         <button
                             onClick={handleSaveSettings}
-                            className="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl transition flex items-center justify-center gap-2 text-base sm:text-lg font-medium"
+                            className="flex-1 app-primary-button py-3 flex items-center justify-center gap-2 text-sm font-medium"
                         >
                             <Save size={18} /> Save All Settings
                         </button>
                         <button
                             onClick={handleResetSettings}
-                            className="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-xl transition flex items-center justify-center gap-2 text-base sm:text-lg font-medium"
+                            className="flex-1 app-secondary-button py-3 flex items-center justify-center gap-2 text-sm font-medium"
                         >
                             <RotateCcw size={18} /> Reset to Default
                         </button>

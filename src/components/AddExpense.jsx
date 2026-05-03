@@ -5,8 +5,13 @@ import InputField from "./common/InputField";
 import Button from "./common/Button";
 import CustomSelect from "./CustomSelect";
 
-export default function AddExpense({ refresh, onClose }) {
+const categories = {
+    expense: ["food", "travel", "rent", "transport", "shopping", "medicine", "gold", "recharge", "internet bill", "dish bill", "other"],
+    income: ["salary", "investment", "other"],
+    investment: ["investment", "gold", "fdr", "dps", "share", "other"]
+};
 
+export default function AddExpense({ refresh, onClose }) {
     const [formData, setFormData] = useState({
         description: "",
         amount: "",
@@ -18,25 +23,14 @@ export default function AddExpense({ refresh, onClose }) {
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] = useState(false);
 
-    const categories = {
-        expense: ["food", "travel", "rent", "transport", "shopping", "medicine", "gold", "recharge", "internet bill", "dish bill", "other"],
-        income: ["salary", "investment", "other"],
-        investment: ["investment", "gold", "fdr", "dps", "share", "other"]
-    };
-
-    // ✅ Type পরিবর্তন হলে প্রথম ক্যাটাগরি সেট করা
     useEffect(() => {
         const firstCategory = categories[formData.type]?.[0] || "";
-        setFormData(prev => ({
-            ...prev,
-            category: firstCategory
-        }));
+        setFormData(prev => ({ ...prev, category: firstCategory }));
     }, [formData.type]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
-
         if (errors[name]) {
             setErrors(prev => {
                 const updated = { ...prev };
@@ -48,11 +42,9 @@ export default function AddExpense({ refresh, onClose }) {
 
     const validateForm = () => {
         const newErrors = {};
-
-        if (!formData.description.trim()) newErrors.description = "Description is required";
-        if (!formData.amount || parseFloat(formData.amount) <= 0) newErrors.amount = "Please enter a valid amount";
-        if (!formData.category) newErrors.category = "Please select a category";
-
+        // if (!formData.description.trim()) newErrors.description = "Description is required";
+        if (!formData.amount || parseFloat(formData.amount) <= 0) newErrors.amount = "Invalid amount";
+        if (!formData.category) newErrors.category = "Category is required";
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -60,109 +52,120 @@ export default function AddExpense({ refresh, onClose }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) return;
-
         setSubmitting(true);
-
         try {
             const response = await expenseAPI.post("/add", {
                 ...formData,
                 amount: parseFloat(formData.amount)
             });
-
             if (response.data.success) {
-                toast.success("Transaction Added Successfully! ✅");
-
+                toast.success("Transaction Added! ✅");
                 refresh?.();
                 onClose?.();
-
-                setFormData({
-                    description: "",
-                    amount: "",
-                    category: categories.expense[0], // ✅ রিসেট করার সময়ও প্রথম ক্যাটাগরি
-                    type: "expense",
-                    date: new Date().toISOString().split('T')[0]
-                });
-                setErrors({});
             }
         } catch (err) {
-            toast.error(err.response?.data?.message || "Failed to add transaction!");
+            toast.error(err.response?.data?.message || "Failed to add!");
         } finally {
             setSubmitting(false);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Main Form Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-            {/* Type */}
-            <InputField
-                label="Type"
-                name="type"
-                type="select"
-                value={formData.type}
-                onChange={handleChange}
-                className="text-sm"
-                options={
-                    <>
-                        <option value="expense">💰 Expense</option>
-                        <option value="income">📈 Income</option>
-                        <option value="investment">📊 Investment</option>
-                    </>
-                }
-            />
+                {/* Type Selection - Full width on mobile */}
+                <div className="sm:col-span-2">
+                    <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 block">
+                        Transaction Type
+                    </label>
+                    <div className="grid grid-cols-3 gap-2">
+                        {['expense', 'income', 'investment'].map((t) => (
+                            <button
+                                key={t}
+                                type="button"
+                                onClick={() => setFormData(prev => ({ ...prev, type: t }))}
+                                className={`py-2 px-1 rounded-xl text-[10px] sm:text-xs font-bold uppercase transition-all border ${formData.type === t
+                                    ? 'bg-blue-600/20 border-blue-500 text-blue-400'
+                                    : 'bg-[#1f2937] border-transparent text-gray-500 hover:border-gray-700'
+                                    }`}
+                            >
+                                {t === 'expense' ? '💰' : t === 'income' ? '📈' : '🏦'} {t}
+                            </button>
+                        ))}
+                    </div>
+                </div>
 
-            {/* Description */}
-            <InputField
-                label="Description"
-                name="description"
-                type="text"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Enter description"
-                error={errors.description}
-                required
-            />
+                {/* Amount */}
+                <div className="sm:col-span-1">
+                    <InputField
+                        label="Amount (Tk)"
+                        name="amount"
+                        type="number"
+                        value={formData.amount}
+                        onChange={handleChange}
+                        placeholder="0.00"
+                        error={errors.amount}
+                        className="bg-[#1f2937] border-gray-700 focus:border-blue-500 rounded-xl"
+                    />
+                </div>
 
-            {/* Amount */}
-            <InputField
-                label="Amount"
-                name="amount"
-                type="number"
-                value={formData.amount}
-                onChange={handleChange}
-                placeholder="0.00"
-                step="0.01"
-                min="0"
-                required
-                error={errors.amount}
-            />
+                {/* Date */}
+                <div className="sm:col-span-1">
+                    <InputField
+                        label="Date"
+                        name="date"
+                        type="date"
+                        value={formData.date}
+                        onChange={handleChange}
+                        className="bg-[#1f2937] border-gray-700 focus:border-blue-500 rounded-xl w-full"
+                    />
+                </div>
 
-            {/* Category - Custom Select with Icons */}
-            <CustomSelect
-                type={formData.type}
-                value={formData.category}
-                onChange={handleChange}
-                error={errors.category}
-                categories={categories}
-            />
+                {/* Category */}
+                <div className="sm:col-span-2">
+                    <CustomSelect
+                        type={formData.type}
+                        value={formData.category}
+                        onChange={handleChange}
+                        error={errors.category}
+                        categories={categories}
+                    />
+                </div>
 
-            {/* Date */}
-            <InputField
-                label="Date"
-                name="date"
-                type="date"
-                value={formData.date}
-                onChange={handleChange}
-            />
+                {/* Description */}
+                <div className="sm:col-span-2">
+                    <InputField
+                        label="Description"
+                        name="description"
+                        type="text"
+                        value={formData.description}
+                        onChange={handleChange}
+                        placeholder="What was this for?"
+                        error={errors.description}
+                        className="bg-[#1f2937] border-gray-700 focus:border-blue-500 rounded-xl"
+                    />
+                </div>
+            </div>
 
-            {/* Buttons */}
-            <div className="flex gap-3 pt-6 justify-between">
-                <Button type="button" variant="secondary" size="sm" onClick={onClose}>
+            {/* Action Buttons */}
+            <div className="flex flex-col-reverse sm:flex-row gap-3 pt-4 border-t border-gray-800">
+                <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={onClose}
+                    className="w-full sm:w-1/3 py-3 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300"
+                >
                     Cancel
                 </Button>
-
-                <Button type="submit" variant="primary" size="sm" disabled={submitting}>
-                    {submitting ? "Adding..." : "Add Transaction"}
+                <Button
+                    type="submit"
+                    variant="primary"
+                    disabled={submitting}
+                    className="w-full sm:w-2/3 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-900/20 font-bold"
+                >
+                    {submitting ? "Processing..." : "Add Transaction"}
                 </Button>
             </div>
         </form>
